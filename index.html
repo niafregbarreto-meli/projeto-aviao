@@ -1,1 +1,51 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=./portal-home.html"><title>Portal SSC2</title></head><body><script>window.location.replace('./portal-home.html');</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal SSC2 - Mercado Envios</title>
+  <script>tailwind.config={theme:{extend:{colors:{ml:{yellow:'#fff159',blue:'#3483fa',dark:'#333333',gray:'#ebebeb',light:'#f5f5f5',green:'#00a650',red:'#ff5a5f'}},fontFamily:{sans:['"Proxima Nova"','-apple-system','Helvetica','Roboto','Arial','sans-serif']}}}}</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    :root{--kraken-yellow:#ffe600;--kraken-bg:#ededed;--kraken-text:rgba(0,0,0,.8);--kraken-blue:#3483fa;--kraken-blue-hover:#2968c8}
+    body{margin:0;display:flex;flex-direction:column;min-height:100vh;font-family:"Proxima Nova",-apple-system,Helvetica,Roboto,Arial,sans-serif;background-color:var(--kraken-bg);}
+    .kraken-nav-header{background-color:var(--kraken-yellow);box-shadow:0 1px 0 0 rgba(0,0,0,.1);height:54px;display:flex;justify-content:space-between;align-items:center;padding:0 24px;position:fixed;top:0;width:100%;box-sizing:border-box;z-index:50;}
+    .kraken-logo__link{background-image:url("https://http2.mlstatic.com/frontend-assets/ui-navigation/5.19.5/mercadolibre/logo__large_plus.png");background-size:134px 34px;background-repeat:no-repeat;display:block;width:134px;height:34px;text-decoration:none;}
+    .spa-nav-btn{background:rgba(0,0,0,0.07);border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;color:rgba(0,0,0,0.65);transition:background 0.15s;text-transform:uppercase;letter-spacing:.5px;}
+    .spa-nav-btn:hover{background:rgba(0,0,0,0.15);}
+    .spa-nav-active{background:rgba(0,0,0,0.18) !important;color:rgba(0,0,0,0.85);}
+    #app-content{margin-top:54px;flex:1;}
+    .module-loading{text-align:center;padding:80px 20px;}
+    .loader{border:4px solid #f3f3f3;border-top:4px solid var(--kraken-blue);border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:0 auto;}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <header class="kraken-nav-header">
+    <div>
+      <a class="kraken-logo__link" href="#home" onclick="navTo('home');return false;" title="Portal SSC2"></a>
+    </div>
+    <nav style="display:flex;align-items:center;gap:8px;">
+      <button class="spa-nav-btn" data-module="home"  onclick="navTo('home')">Home</button>
+      <button class="spa-nav-btn" data-module="colab" onclick="navTo('colab')">Colab</button>
+      <button class="spa-nav-btn" data-module="lms"   onclick="navTo('lms')">LMS</button>
+      <button class="spa-nav-btn" data-module="org"   onclick="navTo('org')">Org</button>
+      <button class="spa-nav-btn" data-module="bingo" onclick="navTo('bingo')">Bingo</button>
+    </nav>
+  </header>
+
+  <div id="app-content">
+    <div class="module-loading"><div class="loader"></div></div>
+  </div>
+
+  <script src="scripts/bridge.js"></script>
+  <script src="scripts/home.js"></script>
+  <script src="scripts/colab.js"></script>
+  <script src="scripts/lms.js"></script>
+  <script src="scripts/org.js"></script>
+  <script src="scripts/bingo.js"></script>
+  <script src="scripts/router.js"></script>
+</body>
+</html>
