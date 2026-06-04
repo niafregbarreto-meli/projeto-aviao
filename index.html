@@ -41,13 +41,27 @@
     <div>
       <a class="kraken-logo__link" href="#home" onclick="navTo('home');return false;" title="Portal SSC2"></a>
     </div>
-    <nav style="display:flex;align-items:center;gap:8px;">
+    <div style="display:flex;align-items:center;gap:8px;position:relative;">
       <button class="spa-nav-btn" data-module="home"  onclick="navTo('home')">Home</button>
       <button class="spa-nav-btn" data-module="colab" onclick="navTo('colab')">Colab</button>
       <button class="spa-nav-btn" data-module="lms"   onclick="navTo('lms')">LMS</button>
       <button class="spa-nav-btn" data-module="org"   onclick="navTo('org')">Org</button>
       <button class="spa-nav-btn" data-module="bingo" onclick="navTo('bingo')">Bingo</button>
-    </nav>
+
+      <!-- Facility / settings menu -->
+      <div style="position:relative;margin-left:4px;">
+        <button id="btn-facility" onclick="toggleFacilityMenu()" title="Configurações" style="background:rgba(0,0,0,0.07);border:none;border-radius:6px;width:30px;height:28px;font-size:18px;cursor:pointer;color:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;line-height:1;letter-spacing:0;">⋮</button>
+        <div id="facility-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);min-width:210px;z-index:1000;overflow:hidden;">
+          <div style="padding:10px 12px 4px;font-size:10px;text-transform:uppercase;color:#999;font-weight:bold;letter-spacing:.5px;border-bottom:1px solid #f5f5f5;">Facilidade</div>
+          <div id="facility-list" style="padding:4px 0;"></div>
+          <div style="border-top:1px solid #f0f0f0;padding:4px;">
+            <a href="?guest=1" style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:#3483fa;text-decoration:none;border-radius:4px;font-weight:500;">
+              <span>👤</span><span>Entrar como Visitante</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <div id="app-content">

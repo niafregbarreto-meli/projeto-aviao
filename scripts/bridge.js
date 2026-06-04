@@ -1,6 +1,13 @@
 
-const SCRIPT_URL='https://script.google.com/a/macros/mercadolivre.com/s/AKfycbxHGNvlrL_kItJQCgqX6k0BxjvHNIj0UlGx8TN14jpJpQkNGPFWv-8sanbpLDtuoSNC/exec';
+const _SSC2_URL='https://script.google.com/a/macros/mercadolivre.com/s/AKfycbxHGNvlrL_kItJQCgqX6k0BxjvHNIj0UlGx8TN14jpJpQkNGPFWv-8sanbpLDtuoSNC/exec';
 const PORTALS={home:'home',colab:'colab',lms:'lms',org:'org',bingo:'bingo'};
+
+const FACILITIES=[
+  {id:'ssc2', nome:'SSC2 – São Paulo', url:_SSC2_URL},
+];
+
+let ACTIVE_FACILITY = localStorage.getItem('portal_facility_id') || 'ssc2';
+let SCRIPT_URL = localStorage.getItem('portal_facility_url') || _SSC2_URL;
 
 // ── Guest mode ───────────────────────────────────────────────────────────────
 const GUEST_MODE = new URLSearchParams(window.location.search).get('guest') === '1';
@@ -8,35 +15,32 @@ const GUEST_DURATION_MS = 60 * 60 * 1000;
 const _GUEST_START = GUEST_MODE ? Date.now() : null;
 
 const _MOCK = {
-  getMeuPerfilHome:  () => ({nome:'Visitante Demo', foto:'', iniciais:'VD'}),
-  getAppsData:       () => [
-    {title:'Colaboradores', icon:'users',         url:'colab'},
+  getMeuPerfilHome:    () => ({nome:'Visitante Demo', foto:'', iniciais:'VD'}),
+  getAppsData:         () => [
+    {title:'Colaboradores', icon:'users',          url:'colab'},
     {title:'LMS',           icon:'graduation-cap', url:'lms'},
     {title:'Organograma',   icon:'git-fork',       url:'org'},
     {title:'Bingo',         icon:'grid-2x2',       url:'bingo'},
   ],
-  getFuncionarios:   () => [
+  getFuncionarios:     () => [
     {ID_UNICO:'D1',NOME:'Ana Demo',EMAIL:'ana@demo.com',CARGO:'Analista',EMPRESA:'ML',UNIDADE:'SP',TURNO:'M',MODAL:'van',LIDER:'Carlos Demo',LIDER_EMAIL:'carlos@demo.com',LMS_ID:'10001'},
     {ID_UNICO:'D2',NOME:'Bruno Demo',EMAIL:'bruno@demo.com',CARGO:'Supervisor',EMPRESA:'ML',UNIDADE:'RJ',TURNO:'T',MODAL:'moto',LIDER:'Carlos Demo',LIDER_EMAIL:'carlos@demo.com',LMS_ID:'10002'},
   ],
   getLmsDashboardData: () => ({extQuery:[], queryLms:[]}),
-  captarMeuPerfil:   () => ({nome:'Visitante Demo', email:'guest@demo.com', foto:'', iniciais:'VD', cargo:'Demo', unidade:'Demo'}),
-  captarTudoDoUsuario:() => ({funcionario:null, historico:[]}),
-  getAppsData:       () => [],
+  captarMeuPerfil:     () => ({nome:'Visitante Demo', email:'visitante@demo.com', foto:'', iniciais:'VD', cargo:'Demo', unidade:'Demo'}),
+  captarTudoDoUsuario: () => ({funcionario:null, historico:[]}),
 };
 
 function _guestCall(action) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       const fn = _MOCK[action];
-      if (fn) resolve(fn());
-      else resolve(null);
+      resolve(fn ? fn() : null);
     }, 300);
   });
 }
 
 if (GUEST_MODE) {
-  // Banner with countdown
   document.addEventListener('DOMContentLoaded', function() {
     const remaining = () => {
       const ms = GUEST_DURATION_MS - (Date.now() - _GUEST_START);
@@ -57,6 +61,46 @@ if (GUEST_MODE) {
       else if (el) el.textContent = t;
     }, 1000);
   });
+}
+
+// ── Facility menu ─────────────────────────────────────────────────────────────
+function toggleFacilityMenu() {
+  const d = document.getElementById('facility-dropdown');
+  if (!d) return;
+  const show = d.style.display === 'none';
+  if (show) {
+    d.style.display = 'block';
+    _renderFacilityList();
+    setTimeout(() => document.addEventListener('click', _closeFacilityOutside, {once:true}), 0);
+  } else {
+    d.style.display = 'none';
+  }
+}
+function _closeFacilityOutside(e) {
+  const d = document.getElementById('facility-dropdown');
+  const btn = document.getElementById('btn-facility');
+  if (d && !d.contains(e.target) && e.target !== btn) d.style.display = 'none';
+  else if (d && d.style.display !== 'none') document.addEventListener('click', _closeFacilityOutside, {once:true});
+}
+function _renderFacilityList() {
+  const list = document.getElementById('facility-list');
+  if (!list) return;
+  list.innerHTML = FACILITIES.map(f =>
+    `<div onclick="selectFacility('${f.id}')" style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;font-size:13px;background:${ACTIVE_FACILITY===f.id?'#f0f7ff':''};border-radius:4px;margin:2px 4px;">
+      <span style="color:${ACTIVE_FACILITY===f.id?'#3483fa':'transparent'};font-weight:bold;">✓</span>
+      <span>${f.nome}</span>
+    </div>`
+  ).join('');
+}
+function selectFacility(id) {
+  const f = FACILITIES.find(x => x.id === id);
+  if (!f) return;
+  SCRIPT_URL = f.url;
+  ACTIVE_FACILITY = id;
+  localStorage.setItem('portal_facility_url', SCRIPT_URL);
+  localStorage.setItem('portal_facility_id', ACTIVE_FACILITY);
+  document.getElementById('facility-dropdown').style.display = 'none';
+  window.location.reload();
 }
 
 // ── API call ─────────────────────────────────────────────────────────────────
