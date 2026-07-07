@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Transpaleteira Elétrica</title>
+    <style>
+        :root {
+            --ml-yellow: #fff159;
+            --ml-blue: #3483fa;
+            --ml-green: #00a650;
+            --ml-red: #ff5a5f;
+            --ml-gray: #999;
+            --ml-light-gray: #f5f5f5;
+            --ml-border-gray: #ddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Proxima Nova", -apple-system, Helvetica, Roboto, Arial, sans-serif;
+            background-color: #ebebeb;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: var(--ml-yellow);
+            padding: 16px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 16px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ml-blue);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--ml-yellow);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ml-gray);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--ml-border-gray);
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--ml-blue);
+            box-shadow: 0 0 0 2px rgba(52, 131, 250, 0.2);
+        }
+
+        .form-group.half {
+            display: inline-block;
+            width: calc(50% - 8px);
+            margin-right: 16px;
+        }
+
+        .form-group.half:nth-child(even) {
+            margin-right: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--ml-light-gray);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .checkbox-group:hover {
+            background-color: #ebebeb;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            text-transform: none;
+            color: #333;
+            font-weight: 400;
+            letter-spacing: normal;
+        }
+
+        .checkbox-group label .item-description {
+            font-size: 12px;
+            color: var(--ml-gray);
+            margin-top: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: var(--ml-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2968c8;
+            box-shadow: 0 4px 12px rgba(52, 131, 250, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--ml-light-gray);
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-success {
+            background-color: var(--ml-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #008a3d;
+            box-shadow: 0 4px 12px rgba(0, 166, 80, 0.3);
+        }
+
+        .subsection-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin: 16px 0 12px 0;
+            padding-left: 12px;
+            border-left: 4px solid var(--ml-blue);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--ml-green);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast.error {
+            background: var(--ml-red);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--ml-light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--ml-blue);
+            transition: width 0.3s ease;
+        }
+
+        .summary-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .summary-item {
+            background: var(--ml-light-gray);
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .summary-item .count {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--ml-blue);
+        }
+
+        .summary-item .label {
+            font-size: 12px;
+            color: var(--ml-gray);
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            .form-group.half {
+                display: block;
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 16px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .container {
+                margin: 12px auto;
+                padding: 0 12px;
+            }
+
+            .section-card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏗️ Checklist Transpaleteira Elétrica</h1>
+        <p>Inspeção de Segurança e Operacionalidade</p>
+    </div>
+
+    <div class="container">
+        <form id="checklistForm">
+            <!-- Identificação do Equipamento -->
+            <div class="section-card">
+                <h2 class="section-title">📋 Identificação do Equipamento</h2>
+                <div class="form-group half">
+                    <label for="equipmentId">ID/Número do Equipamento</label>
+                    <input type="text" id="equipmentId" name="equipmentId" placeholder="Ex: TP-001" required>
+                </div>
+                <div class="form-group half">
+                    <label for="equipmentBrand">Marca/Modelo</label>
+                    <input type="text" id="equipmentBrand" name="equipmentBrand" placeholder="Ex: HELI CPD20">
+                </div>
+                <div class="form-group">
+                    <label for="equipmentLocation">Localização/Setor</label>
+                    <input type="text" id="equipmentLocation" name="equipmentLocation" placeholder="Ex: Armazém A">
+                </div>
+            </div>
+
+            <!-- Dados do Operador -->
+            <div class="section-card">
+                <h2 class="section-title">👤 Dados do Operador</h2>
+                <div class="form-group half">
+                    <label for="operatorName">Nome do Operador</label>
+                    <input type="text" id="operatorName" name="operatorName" required>
+                </div>
+                <div class="form-group half">
+                    <label for="operatorId">ID/Matrícula</label>
+                    <input type="text" id="operatorId" name="operatorId" placeholder="Ex: 123456">
+                </div>
+                <div class="form-group half">
+                    <label for="checkDate">Data da Inspeção</label>
+                    <input type="date" id="checkDate" name="checkDate" required>
+                </div>
+                <div class="form-group half">
+                    <label for="checkTime">Hora da Inspeção</label>
+                    <input type="time" id="checkTime" name="checkTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="trainingCertified">Treinamento Certificado</label>
+                    <select id="trainingCertified" name="trainingCertified" required>
+                        <option value="">Selecione</option>
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                        <option value="vencido">Vencido</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Inspeções Visuais -->
+            <div class="section-card">
+                <h2 class="section-title">👁️ Inspeções Visuais (Máquina Desligada)</h2>
+
+                <div class="subsection-title">Documentação e EPIs</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="epi_botina" name="epi_botina">
+                    <label for="epi_botina">Botina de segurança <span class="item-description">Equipamento obrigatório</span></label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="epi_luvas" name="epi_luvas">
+                    <label for="epi_luvas">Luvas de proteção <span class="item-description">Necessárias para proteger mãos</span></label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="epi_colete" name="epi_colete">
+                    <label for="epi_colete">Colete/Camiseta apropriada</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="doc_manual" name="doc_manual">
+                    <label for="doc_manual">Manual do equipamento disponível</label>
+                </div>
+
+                <div class="subsection-title">Estrutura e Garfos</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="struct_garfos" name="struct_garfos">
+                    <label for="struct_garfos">Garfos sem amassados ou deformações</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="struct_rachaduras" name="struct_rachaduras">
+                    <label for="struct_rachaduras">Sem rachaduras na estrutura</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="struct_desgaste" name="struct_desgaste">
+                    <label for="struct_desgaste">Desgaste dentro dos limites aceitáveis</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="struct_pintura" name="struct_pintura">
+                    <label for="struct_pintura">Pintura íntegra (sem corrosão)</label>
+                </div>
+
+                <div class="subsection-title">Rodas e Rolamentos</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="wheels_condition" name="wheels_condition">
+                    <label for="wheels_condition">Rodas em bom estado</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="wheels_free" name="wheels_free">
+                    <label for="wheels_free">Rodas giram livremente sem travamentos</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="wheels_alignment" name="wheels_alignment">
+                    <label for="wheels_alignment">Alinhamento correto</label>
+                </div>
+
+                <div class="subsection-title">Sistema Hidráulico</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hydraulic_leaks" name="hydraulic_leaks">
+                    <label for="hydraulic_leaks">Sem vazamentos de óleo/fluido</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hydraulic_level" name="hydraulic_level">
+                    <label for="hydraulic_level">Nível de fluido hidráulico adequado</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hydraulic_hoses" name="hydraulic_hoses">
+                    <label for="hydraulic_hoses">Mangueiras hidráulicas íntegras</label>
+                </div>
+            </div>
+
+            <!-- Inspeções Funcionais -->
+            <div class="section-card">
+                <h2 class="section-title">⚡ Inspeções Funcionais (Motor Ligado)</h2>
+
+                <div class="subsection-title">Bateria (Modelos Elétricos)</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="battery_charge" name="battery_charge">
+                    <label for="battery_charge">Nível de carga adequado (≥80%)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="battery_cables" name="battery_cables">
+                    <label for="battery_cables">Cabos e conectores em bom estado</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="battery_lock" name="battery_lock">
+                    <label for="battery_lock">Trava de segurança da bateria firme</label>
+                </div>
+                <div class="form-group">
+                    <label for="battery_level">Nível de Carga da Bateria (%)</label>
+                    <input type="number" id="battery_level" name="battery_level" min="0" max="100" placeholder="Exemplo: 85">
+                </div>
+
+                <div class="subsection-title">Controles e Segurança</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="control_buzzer" name="control_buzzer">
+                    <label for="control_buzzer">Buzina/Alerta sonoro funciona</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="control_brake" name="control_brake">
+                    <label for="control_brake">Freio funciona adequadamente</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="control_reverse" name="control_reverse">
+                    <label for="control_reverse">Botão de reversão/antiesmagamento funciona</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="control_steering" name="control_steering">
+                    <label for="control_steering">Timão/Controle de direção responsivo</label>
+                </div>
+
+                <div class="subsection-title">Testes de Elevação</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lift_up" name="lift_up">
+                    <label for="lift_up">Elevação sobe suavemente</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lift_down" name="lift_down">
+                    <label for="lift_down">Descida é controlada e uniforme</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lift_stop" name="lift_stop">
+                    <label for="lift_stop">Equipamento para corretamente no topo</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lift_stability" name="lift_stability">
+                    <label for="lift_stability">Carga permanece estável durante elevação</label>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="section-card">
+                <h2 class="section-title">📝 Observações e Notas</h2>
+                <div class="form-group">
+                    <label for="observations">Observações Importantes</label>
+                    <textarea id="observations" name="observations" rows="4" placeholder="Descreva qualquer problema encontrado..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceRequired">Manutenção Necessária?</label>
+                    <select id="maintenanceRequired" name="maintenanceRequired">
+                        <option value="">Selecione</option>
+                        <option value="nao">Não</option>
+                        <option value="sim_preventiva">Sim - Preventiva</option>
+                        <option value="sim_corretiva">Sim - Corretiva Urgente</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Resumo -->
+            <div class="section-card">
+                <h2 class="section-title">✅ Resumo da Inspeção</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="summary-section">
+                    <div class="summary-item">
+                        <div class="count" id="totalChecked">0</div>
+                        <div class="label">Itens Verificados</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="count" id="totalItems">24</div>
+                        <div class="label">Total de Itens</div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                    <label for="conclusion">Conclusão da Inspeção</label>
+                    <select id="conclusion" name="conclusion" required>
+                        <option value="">Selecione</option>
+                        <option value="aprovado">✅ Equipamento Aprovado</option>
+                        <option value="aprovado_condicional">⚠️ Aprovado com Condicionantes</option>
+                        <option value="reprovado">❌ Equipamento Reprovado</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                    <button type="button" class="btn btn-primary" onclick="exportJSON()">Exportar JSON</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('checkDate').valueAsDate = new Date();
+        const now = new Date();
+        document.getElementById('checkTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            document.getElementById('totalChecked').textContent = checked;
+            document.getElementById('totalItems').textContent = total;
+            const percentage = total > 0 ? (checked / total) * 100 : 0;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        document.addEventListener('change', updateProgress);
+
+        document.getElementById('checklistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const equipmentId = document.getElementById('equipmentId').value.trim();
+            const operatorName = document.getElementById('operatorName').value.trim();
+            const conclusion = document.getElementById('conclusion').value;
+
+            if (!equipmentId || !operatorName || !conclusion) {
+                showToast('Preencha todos os campos obrigatórios', 'error');
+                return;
+            }
+
+            const data = {
+                equipmentId,
+                equipmentBrand: document.getElementById('equipmentBrand').value,
+                equipmentLocation: document.getElementById('equipmentLocation').value,
+                operatorName,
+                operatorId: document.getElementById('operatorId').value,
+                checkDate: document.getElementById('checkDate').value,
+                checkTime: document.getElementById('checkTime').value,
+                trainingCertified: document.getElementById('trainingCertified').value,
+                observations: document.getElementById('observations').value,
+                maintenanceRequired: document.getElementById('maintenanceRequired').value,
+                conclusion,
+                timestamp: new Date().toISOString()
+            };
+
+            const checklists = JSON.parse(localStorage.getItem('transpaleteira_checklists') || '[]');
+            checklists.push(data);
+            localStorage.setItem('transpaleteira_checklists', JSON.stringify(checklists));
+
+            showToast('✅ Checklist salvo com sucesso!');
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('checkDate').valueAsDate = new Date();
+                const now = new Date();
+                document.getElementById('checkTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+                updateProgress();
+            }, 1500);
+        });
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function exportJSON() {
+            const data = {
+                equipmentId: document.getElementById('equipmentId').value,
+                equipmentBrand: document.getElementById('equipmentBrand').value,
+                equipmentLocation: document.getElementById('equipmentLocation').value,
+                operatorName: document.getElementById('operatorName').value,
+                operatorId: document.getElementById('operatorId').value,
+                checkDate: document.getElementById('checkDate').value,
+                checkTime: document.getElementById('checkTime').value,
+                conclusion: document.getElementById('conclusion').value,
+                timestamp: new Date().toISOString()
+            };
+
+            const jsonString = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `checklist-${data.equipmentId}-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('JSON exportado com sucesso!');
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
