@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Transpaleteira</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #3483fa; margin-bottom: 10px; }
+        .subtitle { color: #999; margin-bottom: 30px; }
+        .section { margin-bottom: 30px; border-bottom: 2px solid #fff159; padding-bottom: 20px; }
+        .section h2 { color: #3483fa; font-size: 16px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; font-size: 12px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial; }
+        input:focus, select:focus, textarea:focus { border-color: #3483fa; outline: none; }
+        .checkbox-item { margin-bottom: 10px; }
+        .checkbox-item input { width: auto; margin-right: 10px; }
+        .checkbox-item label { display: inline; margin: 0; }
+        .buttons { text-align: center; margin-top: 30px; }
+        button { padding: 12px 30px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-save { background: #00a650; color: white; }
+        .btn-save:hover { background: #008a3d; }
+        .btn-export { background: #3483fa; color: white; }
+        .btn-export:hover { background: #2968c8; }
+        .btn-reset { background: #f5f5f5; color: #333; border: 1px solid #ddd; }
+        .btn-reset:hover { background: #e0e0e0; }
+        .success { color: #00a650; font-weight: bold; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏗️ Checklist Transpaleteira Elétrica</h1>
+        <p class="subtitle">Inspeção de Segurança e Operacionalidade</p>
+
+        <form id="form">
+            <!-- EQUIPAMENTO -->
+            <div class="section">
+                <h2>📋 Equipamento</h2>
+                <div class="form-group">
+                    <label>ID do Equipamento *</label>
+                    <input type="text" name="equipmentId" required>
+                </div>
+                <div class="form-group">
+                    <label>Marca/Modelo</label>
+                    <input type="text" name="equipmentBrand">
+                </div>
+                <div class="form-group">
+                    <label>Localização</label>
+                    <input type="text" name="equipmentLocation">
+                </div>
+            </div>
+
+            <!-- OPERADOR -->
+            <div class="section">
+                <h2>👤 Operador</h2>
+                <div class="form-group">
+                    <label>Nome *</label>
+                    <input type="text" name="operatorName" required>
+                </div>
+                <div class="form-group">
+                    <label>ID/Matrícula</label>
+                    <input type="text" name="operatorId">
+                </div>
+                <div class="form-group">
+                    <label>Data *</label>
+                    <input type="date" name="checkDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Hora *</label>
+                    <input type="time" name="checkTime" required>
+                </div>
+                <div class="form-group">
+                    <label>Treinamento Certificado? *</label>
+                    <select name="trainingCertified" required>
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                        <option value="Vencido">Vencido</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- INSPEÇÕES VISUAIS -->
+            <div class="section">
+                <h2>👁️ Inspeções Visuais (Desligada)</h2>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Documentação e EPIs</h3>
+                <div class="checkbox-item"><input type="checkbox" name="epi_botina"><label>Botina de segurança</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="epi_luvas"><label>Luvas de proteção</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="epi_colete"><label>Colete apropriado</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="doc_manual"><label>Manual disponível</label></div>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Estrutura e Garfos</h3>
+                <div class="checkbox-item"><input type="checkbox" name="struct_garfos"><label>Garfos sem amassados</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="struct_rachaduras"><label>Sem rachaduras</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="struct_desgaste"><label>Desgaste aceitável</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="struct_pintura"><label>Pintura íntegra</label></div>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Rodas e Rolamentos</h3>
+                <div class="checkbox-item"><input type="checkbox" name="wheels_condition"><label>Rodas em bom estado</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="wheels_free"><label>Giram livremente</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="wheels_alignment"><label>Alinhamento correto</label></div>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Sistema Hidráulico</h3>
+                <div class="checkbox-item"><input type="checkbox" name="hydraulic_leaks"><label>Sem vazamentos</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="hydraulic_level"><label>Nível fluido OK</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="hydraulic_hoses"><label>Mangueiras íntegras</label></div>
+            </div>
+
+            <!-- INSPEÇÕES FUNCIONAIS -->
+            <div class="section">
+                <h2>⚡ Inspeções Funcionais (Ligada)</h2>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Bateria</h3>
+                <div class="checkbox-item"><input type="checkbox" name="battery_charge"><label>Carga ≥80%</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="battery_cables"><label>Cabos em bom estado</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="battery_lock"><label>Trava firme</label></div>
+                <div class="form-group">
+                    <label>Nível de Carga (%)</label>
+                    <input type="number" name="batteryLevel" min="0" max="100">
+                </div>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Controles e Segurança</h3>
+                <div class="checkbox-item"><input type="checkbox" name="control_buzzer"><label>Buzina funciona</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="control_brake"><label>Freio funciona</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="control_reverse"><label>Reversão funciona</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="control_steering"><label>Direção responsiva</label></div>
+
+                <h3 style="color: #666; font-size: 13px; margin: 15px 0 10px 0;">Elevação</h3>
+                <div class="checkbox-item"><input type="checkbox" name="lift_up"><label>Sobe suavemente</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="lift_down"><label>Desce controlada</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="lift_stop"><label>Para corretamente</label></div>
+                <div class="checkbox-item"><input type="checkbox" name="lift_stability"><label>Estável na elevação</label></div>
+            </div>
+
+            <!-- CONCLUSÃO -->
+            <div class="section">
+                <h2>📝 Observações e Conclusão</h2>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea name="observations" rows="4" placeholder="Problemas encontrados, recomendações..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Manutenção Necessária?</label>
+                    <select name="maintenanceRequired">
+                        <option value="">Não</option>
+                        <option value="Preventiva">Sim - Preventiva</option>
+                        <option value="Corretiva Urgente">Sim - Corretiva Urgente</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Conclusão *</label>
+                    <select name="conclusion" required>
+                        <option value="">Selecione</option>
+                        <option value="✅ Aprovado">✅ Equipamento Aprovado</option>
+                        <option value="⚠️ Condicional">⚠️ Aprovado com Condicionantes</option>
+                        <option value="❌ Reprovado">❌ Equipamento Reprovado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="reset" class="btn-reset">Limpar</button>
+                <button type="button" class="btn-export" onclick="exportJSON()">Exportar JSON</button>
+                <button type="submit" class="btn-save">Salvar Checklist</button>
+            </div>
+            <div id="message"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = new FormData(this);
+            const data = Object.fromEntries(form);
+            data.timestamp = new Date().toISOString();
+
+            localStorage.setItem('checklist_' + Date.now(), JSON.stringify(data));
+
+            document.getElementById('message').innerHTML = '<div class="success">✅ Checklist salvo com sucesso!</div>';
+
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('message').innerHTML = '';
+            }, 2000);
+        });
+
+        function exportJSON() {
+            const form = new FormData(document.getElementById('form'));
+            const data = Object.fromEntries(form);
+            data.timestamp = new Date().toISOString();
+
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'checklist-' + data.equipmentId + '-' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Set default date and time
+        document.querySelector('input[name="checkDate"]').valueAsDate = new Date();
+        const now = new Date();
+        document.querySelector('input[name="checkTime"]').value =
+            String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    </script>
+</body>
+</html>
