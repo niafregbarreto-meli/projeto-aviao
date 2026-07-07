@@ -1,0 +1,17 @@
+{
+  "nome": "Checklist Transpaleteira Elétrica",
+  "versao": "1.0",
+  "data": "2024-07-07",
+  "arquivos_principais": [
+    "checklist-transpaleteira-grid.html - Versão otimizada para Grid",
+    "transpaleteira-checklist.html - Versão completa",
+    "processar_checklists.py - Script de análise"
+  ],
+  "documentacao": [
+    "GUIA_TRANSPALETEIRA.md - Guia de uso",
+    "README_TRANSPALETEIRA.md - Documentação técnica",
+    "ANALISE_DADOS.md - Análise de dados",
+    "UPLOAD_GRID.md - Como fazer upload"
+  ],
+  "status": "Pronto para produção"
+}
